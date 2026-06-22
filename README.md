@@ -1,0 +1,217 @@
+# ⚽ MatchMind AI
+### Understand every moment, not just the scoreline.
+
+> **IBM SkillsBuild AI Builders Challenge — June 2026**
+> Solo submission · Mahmudul Hassan Mithun · University of East London
+
+[![IBM Granite](https://img.shields.io/badge/IBM-Granite_3.3_8B-0062FF?logo=ibm)](https://github.com/ibm-granite-community)
+[![Docling](https://img.shields.io/badge/IBM-Docling-0062FF?logo=ibm)](https://www.docling.ai)
+[![IBM Bob](https://img.shields.io/badge/IBM-Bob-0062FF?logo=ibm)](https://bob.ibm.com)
+[![Python](https://img.shields.io/badge/Python-3.10+-3776AB?logo=python&logoColor=white)](https://python.org)
+[![Streamlit](https://img.shields.io/badge/Streamlit-1.35+-FF4B4B?logo=streamlit&logoColor=white)](https://streamlit.io)
+
+---
+
+## The Problem
+
+The FIFA World Cup is the most-watched sporting event on earth — yet billions of fans experience it as a sequence of opaque moments they cannot fully understand.
+
+**Why was that goal disallowed?** VAR checked something, a screen showed a line, the goal was ruled out. Millions of fans have no idea what was actually reviewed or whether the decision was correct.
+
+**Why did momentum shift?** A substitution happened, the game changed completely — but commentators offer little more than "they needed fresh legs."
+
+**Who actually has the advantage?** Pre-match punditry is full of narrative, rarely grounded in actual historical data.
+
+AI exists that can explain all of this. Most teams building for this challenge did not use it that way — they built score predictors. MatchMind AI is different: it uses AI to make the game *understandable*.
+
+---
+
+## What MatchMind AI Does
+
+A three-mode Streamlit application:
+
+### 🔮 Match Intelligence
+- Selects any two World Cup 2026 nations (or any historical international teams)
+- Runs a **Random Forest classifier** trained on 47,000+ international matches (1990–2025) with eight engineered features: win rate, goal average, recent form, venue type, tournament weight
+- Displays predicted outcome probabilities with visual probability bars
+- **IBM Granite** generates a 3-paragraph pre-match tactical briefing grounded in the actual stats — *not generic commentary, but analysis tied to the numbers*
+
+### ⚖️ VAR Companion
+- User describes any match situation and the decision made (or picks from real World Cup 2026 templates)
+- **Docling** has parsed the full FIFA Laws of the Game 2024/25 PDF into 400+ searchable chunks
+- **sentence-transformers** retrieves the most relevant Law articles via cosine similarity
+- **IBM Granite** generates a plain-English ruling explanation citing the specific Law, explaining what VAR checked, why the decision was correct or debatable, and what fans commonly misunderstand
+- Retrieved Law passages are shown as citations so fans can read the source
+
+### 🧠 Tactical Explainer
+- Two sub-modes: **formation/substitution analysis** and **momentum shift breakdown**
+- User provides a team, a tactical change, and match context
+- **IBM Granite** explains what problem the manager was solving, what the new shape offers, and what risk it introduces — written at the level of a Guardian football correspondent, not a Wikipedia summary
+
+---
+
+## IBM Technologies Used
+
+| Technology | Role |
+|---|---|
+| **IBM Granite** (`ibm/granite-3-3-8b-instruct` via watsonx.ai) | All natural language generation: tactical briefings, VAR explanations, momentum analysis |
+| **Docling** | Parses the FIFA Laws of the Game PDF into structured chunks for RAG retrieval |
+| **IBM Bob** | Used throughout the Learning Lab to scaffold and understand the ML pipeline code |
+
+Additional open-source stack: scikit-learn, sentence-transformers, pandas, Streamlit, PyMuPDF (Docling fallback), joblib.
+
+---
+
+## Why This Matters
+
+**Scale:** 5 billion people watch the World Cup. Most cannot access expert tactical analysis in their language, at their level of knowledge. MatchMind AI democratises that understanding.
+
+**Trust:** VAR decisions are the most contested element of modern football. Fans who understand the Laws trust the process more — even when they disagree with a call. Explainable AI applied to officiating builds that trust.
+
+**Timing:** This is built during World Cup 2026, with real fixtures hardcoded into the Match Intelligence tab. This is not a hypothetical — it is immediately usable.
+
+**Explainability:** Every output is grounded: predictions in historical stats, VAR explanations in the actual Laws text, tactical analysis in the team's own performance data. No hallucinated facts. No black-box outputs. Every claim is traceable.
+
+---
+
+## Project Structure
+
+```
+matchmind-ai/
+├── app.py                      # Streamlit application (3 tabs)
+├── src/
+│   ├── granite_client.py       # IBM Granite / watsonx.ai integration
+│   └── laws_rag.py             # Docling-powered FIFA Laws RAG pipeline
+├── models/                     # Generated by Learning Lab notebook
+│   ├── match_predictor.pkl     # Trained Random Forest model
+│   ├── team_data.pkl           # Team statistics dict + feature_cols
+│   ├── laws_chunks.pkl         # Docling-parsed Law chunks (cached)
+│   └── laws_embeddings.npy    # Sentence-transformer embeddings (cached)
+├── data/
+│   ├── results.csv             # Downloaded by Learning Lab (47k matches)
+│   └── fifa_laws.pdf           # Downloaded by laws_rag.py on first run
+├── notebooks/
+│   └── bob_generated_code.ipynb  # Learning Lab notebook (IBM Bob)
+├── requirements.txt
+├── .env.example
+└── README.md
+```
+
+---
+
+## Setup & Running
+
+### 1. Clone the repo
+
+```bash
+git clone https://github.com/<your-username>/matchmind-ai.git
+cd matchmind-ai
+```
+
+### 2. Install dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### 3. Run the Learning Lab notebook
+
+Open `notebooks/bob_generated_code.ipynb` in Jupyter Lab (with IBM Bob installed). Run all 10 tasks. This generates `models/match_predictor.pkl` and `models/team_data.pkl`.
+
+Alternatively, run the fallback cells directly — the model trains in under 2 minutes.
+
+### 4. Configure IBM watsonx credentials
+
+Copy `.env.example` to `.env` and fill in your credentials:
+
+```bash
+cp .env.example .env
+```
+
+```env
+WATSONX_API_KEY=your_ibm_cloud_api_key
+WATSONX_PROJECT_ID=your_watsonx_project_id
+WATSONX_API_URL=https://us-south.ml.cloud.ibm.com/ml/v1/text/generation?version=2023-05-29
+```
+
+Get free watsonx.ai access at [ibm.biz/watsonx-trial](https://ibm.biz/watsonx-trial).
+
+### 5. Build the Laws RAG index (first run only)
+
+```bash
+python src/laws_rag.py
+```
+
+This downloads the FIFA Laws PDF, parses it with Docling, and caches embeddings to `models/`. Takes ~3 minutes on first run; instant thereafter.
+
+### 6. Launch the app
+
+```bash
+streamlit run app.py
+```
+
+Open [http://localhost:8501](http://localhost:8501).
+
+> **Note:** The app works without watsonx credentials — the prediction model and probability bars will function, but AI explanations will be disabled. The Laws RAG index is also optional; VAR explanations will run without Law citations if unavailable.
+
+---
+
+## requirements.txt
+
+```
+streamlit>=1.35.0
+pandas>=2.0.0
+scikit-learn>=1.4.0
+joblib>=1.3.0
+requests>=2.31.0
+numpy>=1.26.0
+sentence-transformers>=2.7.0
+docling>=1.0.0
+pymupdf>=1.24.0
+python-dotenv>=1.0.0
+```
+
+---
+
+## Model Details
+
+The Random Forest classifier (built in the Learning Lab):
+
+- **Training data:** International football results 1990–2025 (~35,000 matches)
+- **Test data:** Matches from 2018 onwards (~8,000 matches)
+- **Features (8):** `team_a_winrate`, `team_b_winrate`, `team_a_goal_avg`, `team_b_goal_avg`, `team_a_recent_form`, `team_b_recent_form`, `is_neutral`, `is_major_tournament`
+- **Target:** 0 = home win, 1 = draw, 2 = away win
+- **Architecture:** `RandomForestClassifier(n_estimators=200, max_depth=12, random_state=42)`
+- **Time-based split:** No data leakage — test set is strictly post-2018
+
+Feature engineering follows a strict chronological protocol: each match's features are computed from history *prior* to that match's date only.
+
+---
+
+## The Learning Lab
+
+This project is built on top of the IBM SkillsBuild June Learning Lab: **"Predict the Outcome of a Football Match."** The lab introduces IBM Bob, historical soccer data, feature engineering, and Streamlit deployment across 10 guided tasks.
+
+MatchMind AI takes the lab's Random Forest baseline and extends it into a full explainability platform — adding IBM Granite for natural language generation and Docling for document-grounded RAG, transforming a score predictor into something the challenge explicitly asked for: a human-centered, explainable AI that improves understanding, trust, and accessibility.
+
+---
+
+## Demo Video
+
+[▶ Watch the 3-minute demo](https://your-demo-link-here)
+
+---
+
+## Author
+
+**Mahmudul Hassan Mithun**
+BSc Data Science & AI, University of East London (graduating 2027)
+[mhassanmithun.com](https://mhassanmithun.com) · [github.com/mithun2k2](https://github.com/mithun2k2)
+
+*Built solo as part of IBM SkillsBuild AI Builders Challenge, June 2026.*
+
+---
+
+## License
+
+MIT — see [LICENSE](LICENSE)

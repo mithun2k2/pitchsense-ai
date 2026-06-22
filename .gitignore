@@ -1,0 +1,9 @@
+﻿venv/
+data/results.csv
+models/
+__pycache__/
+.streamlit/secrets.toml
+*.pyc
+.env
+anaconda_projects/
+.ipynb_checkpoints/
