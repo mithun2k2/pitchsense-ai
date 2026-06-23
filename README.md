@@ -1,5 +1,5 @@
-# ⚽ MatchMind AI
-### Understand every moment, not just the scoreline.
+# ⚽ PitchSense AI
+### Understand every match moment. Explained by AI.
 
 > **IBM SkillsBuild AI Builders Challenge — June 2026**
 > Solo submission · Mahmudul Hassan Mithun · University of East London
@@ -22,11 +22,11 @@ The FIFA World Cup is the most-watched sporting event on earth — yet billions 
 
 **Who actually has the advantage?** Pre-match punditry is full of narrative, rarely grounded in actual historical data.
 
-AI exists that can explain all of this. Most teams building for this challenge did not use it that way — they built score predictors. MatchMind AI is different: it uses AI to make the game *understandable*.
+AI exists that can explain all of this. Most teams building for this challenge did not use it that way — they built score predictors. PitchSense AI is different: it uses AI to make the game *understandable*.
 
 ---
 
-## What MatchMind AI Does
+## What PitchSense AI Does
 
 A three-mode Streamlit application:
 
@@ -64,7 +64,7 @@ Additional open-source stack: scikit-learn, sentence-transformers, pandas, Strea
 
 ## Why This Matters
 
-**Scale:** 5 billion people watch the World Cup. Most cannot access expert tactical analysis in their language, at their level of knowledge. MatchMind AI democratises that understanding.
+**Scale:** 5 billion people watch the World Cup. Most cannot access expert tactical analysis in their language, at their level of knowledge. PitchSense AI democratises that understanding.
 
 **Trust:** VAR decisions are the most contested element of modern football. Fans who understand the Laws trust the process more — even when they disagree with a call. Explainable AI applied to officiating builds that trust.
 
@@ -77,7 +77,7 @@ Additional open-source stack: scikit-learn, sentence-transformers, pandas, Strea
 ## Project Structure
 
 ```
-matchmind-ai/
+pitchsense-ai/
 ├── app.py                      # Streamlit application (3 tabs)
 ├── src/
 │   ├── granite_client.py       # IBM Granite / watsonx.ai integration
@@ -104,8 +104,8 @@ matchmind-ai/
 ### 1. Clone the repo
 
 ```bash
-git clone https://github.com/<your-username>/matchmind-ai.git
-cd matchmind-ai
+git clone https://github.com/<your-username>/pitchsense-ai.git
+cd pitchsense-ai
 ```
 
 ### 2. Install dependencies
@@ -192,7 +192,7 @@ Feature engineering follows a strict chronological protocol: each match's featur
 
 This project is built on top of the IBM SkillsBuild June Learning Lab: **"Predict the Outcome of a Football Match."** The lab introduces IBM Bob, historical soccer data, feature engineering, and Streamlit deployment across 10 guided tasks.
 
-MatchMind AI takes the lab's Random Forest baseline and extends it into a full explainability platform — adding IBM Granite for natural language generation and Docling for document-grounded RAG, transforming a score predictor into something the challenge explicitly asked for: a human-centered, explainable AI that improves understanding, trust, and accessibility.
+PitchSense AI takes the lab's Random Forest baseline and extends it into a full explainability platform — adding IBM Granite for natural language generation and Docling for document-grounded RAG, transforming a score predictor into something the challenge explicitly asked for: a human-centered, explainable AI that improves understanding, trust, and accessibility.
 
 ---
 
