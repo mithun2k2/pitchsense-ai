@@ -1,5 +1,5 @@
 """
-app.py — MatchMind AI
+app.py — PitchSense AI
 IBM SkillsBuild AI Builders Challenge · June 2026
 
 A human-centered, explainable AI companion for World Cup 2026.
@@ -28,7 +28,7 @@ import streamlit as st
 # ---------------------------------------------------------------------------
 
 st.set_page_config(
-    page_title="MatchMind AI · World Cup 2026",
+    page_title="PitchSense AI · World Cup 2026",
     page_icon="⚽",
     layout="wide",
     initial_sidebar_state="collapsed",
@@ -46,21 +46,21 @@ html, body, [class*="css"] {
 }
 
 /* ── Header strip ── */
-.matchmind-header {
+.pitchsense-header {
     background: linear-gradient(135deg, #0a3d1f 0%, #1a5c33 60%, #0d4a28 100%);
     border-radius: 12px;
     padding: 2rem 2.5rem 1.6rem;
     margin-bottom: 1.5rem;
     border-left: 5px solid #4ade80;
 }
-.matchmind-header h1 {
+.pitchsense-header h1 {
     color: #f0fdf4;
     font-size: 2rem;
     font-weight: 800;
     letter-spacing: -0.5px;
     margin: 0 0 0.25rem;
 }
-.matchmind-header p {
+.pitchsense-header p {
     color: #86efac;
     font-size: 0.95rem;
     margin: 0;
@@ -247,8 +247,8 @@ KNOWN_TEAMS_WC26 = list({t for pair in WC2026_FIXTURES for t in pair})
 # ---------------------------------------------------------------------------
 
 st.markdown("""
-<div class="matchmind-header">
-  <h1>⚽ MatchMind AI</h1>
+<div class="pitchsense-header">
+  <h1>⚽ PitchSense AI</h1>
   <p>World Cup 2026 · Powered by IBM Granite &amp; Docling · Explainable AI for every fan</p>
 </div>
 """, unsafe_allow_html=True)
@@ -624,7 +624,7 @@ with tab3:
 st.markdown("---")
 st.markdown(
     "<center style='color:#94a3b8; font-size:0.8rem;'>"
-    "MatchMind AI · IBM SkillsBuild AI Builders Challenge · June 2026 · "
+    "PitchSense AI · IBM SkillsBuild AI Builders Challenge · June 2026 · "
     "Built with IBM Granite, Docling, IBM Bob, scikit-learn, Streamlit"
     "</center>",
     unsafe_allow_html=True,
