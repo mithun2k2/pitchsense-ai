@@ -198,7 +198,7 @@ PitchSense AI takes the lab's Random Forest baseline and extends it into a full 
 
 ## Demo Video
 
-[▶ Watch the 3-minute demo](https://your-demo-link-here)
+[▶ Watch the 3-minute demo](https://youtu.be/Bg4KN5DfaUc)
 
 ---
 
