@@ -1,6 +1,6 @@
 """
 granite_client.py
-IBM Granite API integration for MatchMind AI.
+IBM Granite API integration for PitchSense AI.
 Uses ibm-watsonx-ai SDK — handles region routing and auth automatically.
 """
 
@@ -98,7 +98,7 @@ def generate(
 # ---------------------------------------------------------------------------
 
 _MATCH_SYSTEM = (
-    "You are MatchMind AI, an expert soccer analyst and tactical commentator. "
+    "You are PitchSense AI, an expert soccer analyst and tactical commentator. "
     "You explain football matches in clear, engaging language accessible to any fan. "
     "Always ground your analysis in specific stats provided. "
     "Never make up scores or facts not in the prompt. "
